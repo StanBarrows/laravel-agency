@@ -1,0 +1,74 @@
+name: Pull Request  | CI
+
+on: pull_request
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+    name: pull-request | ci
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        php: [ 8.1 ]
+        node: [ 14 ]
+
+    steps:
+      - name: set timezone
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Europe/Zurich"
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Setup php env
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, fileinfo, mysql, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+
+      - name: Prepare the environment
+        run: cp .env.ci .env
+
+      # Backend dependencies
+      - name: Install Composer dependencies
+        run: composer install -q --no-progress --prefer-dist --no-interaction --no-suggest --optimize-autoloader --no-scripts
+
+      # Prepare backend
+      - name: Create Database
+        run: |
+          sudo systemctl start mysql
+          mysql --user="root" --password="root" -e "CREATE DATABASE github character set UTF8mb4 collate utf8mb4_bin;"
+
+        # Artisan commands
+      - name: Generate app key
+        run: php artisan key:generate
+      - name: Clear Config
+        run: php artisan config:clear
+      - name: Run Migration
+        run: php artisan migrate:fresh --seed
+
+      # Frontend dependencies
+      - name: Install dependencies 👨🏻‍💻
+        run: npm install && npm run prod
+
+      # Backend tests
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: php artisan test --parallel
+
+      # Store logs
+      - name: Store Log Artifacts
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: Store report artifacts
+          path: ./storage/logs

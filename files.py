@@ -33,4 +33,4 @@ def copy_file(sourcePath, targetPath, ):
         import sys
         sys.exit('File path not found: ' + sourcePath)
     import os
-    os.system('cp ' + sourcePath + ' ' + targetPath)
+    os.system('cp -R ' + sourcePath + ' ' + targetPath)

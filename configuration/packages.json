@@ -16,7 +16,7 @@
       "order": null,
       "commands": [
         {
-          "command": "composer require spatie/laravel-ray\""
+          "command": "composer require spatie/laravel-ray"
         }
       ]
     },
@@ -33,6 +33,15 @@
       ]
     },
     {
+      "key": "barryvdh-laravel-debugbar",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require barryvdh/laravel-debugbar --dev"
+        }
+      ]
+    },
+    {
       "key": "spatie-laravel-activitylog",
       "order": null,
       "commands": [
@@ -44,6 +53,15 @@
         },
         {
           "command": "php artisan vendor:publish --provider=\"Spatie\\Activitylog\\ActivitylogServiceProvider\" --tag=\"activitylog-config\""
+        }
+      ]
+    },
+    {
+      "key": "spatie-flash",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require spatie/laravel-flash"
         }
       ]
     },
@@ -72,6 +90,24 @@
       ]
     },
     {
+      "key": "postmark",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require symfony/postmark-mailer symfony/http-client"
+        }
+      ]
+    },
+     {
+      "key": "flare",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require spatie/laravel-ignition"
+        }
+      ]
+    },
+    {
       "key": "pest-php",
       "order": null,
       "commands": [
@@ -83,6 +119,12 @@
         },
         {
           "command": "php artisan pest:install --no-interaction"
+        },
+        {
+          "command": "composer require pestphp/pest-plugin-parallel --dev"
+        },
+        {
+          "command": "composer require brianium/paratest"
         }
       ]
     }
@@ -103,8 +145,11 @@
       "key": "migration",
       "order": null,
       "commands": [
-         {
+        {
           "command": "php artisan session:table"
+        },
+        {
+          "command": "php artisan notifications:table"
         },
         {
           "command": "php artisan migrate:fresh --seed --force"
@@ -117,7 +162,7 @@
       "key": "pest",
       "order": null,
       "commands": [
-         {
+        {
           "command": "php artisan cache:clear && php artisan config:clear"
         },
         {

@@ -1,19 +1,51 @@
 import os
 import files
 
-name = 'server'
+name = 'servers'
+projectPath = '../' + name
+
+resources = {
+    'readme': {
+        'name': 'README.md',
+        'source': '/',
+        'target': '/',
+    },
+    'phpunit': {
+        'name': 'phpunit.xml',
+        'source': '/',
+        'target': '/',
+    },
+    'AppServiceProvider': {
+        'name': 'AppServiceProvider.php',
+        'source': '/',
+        'target': '/app/Providers/',
+    },
+    'github': {
+        'name': '.github',
+        'source': '/',
+        'target': '/',
+    },
+    'env-ci': {
+        'name': '.env.ci',
+        'source': '/',
+        'target': '/',
+    },
+}
 
 environments = {
-    'APP_NAME': "Server",
-    'APP_URL': "https://server.test",
-    'SESSION_DOMAIN': "server.test",
+    'APP_NAME': "Servers",
+    'APP_URL': "https://servers.test",
+    'SESSION_DOMAIN': "servers.test",
     'SESSION_DRIVER': "database",
+    'SESSION_SECURE': "true",
     'DB_PORT': "33072",
     'DB_DATABASE': "laravel",
+    'MAIL_HOST': "127.0.0.1",
     'MAIL_PORT': "2525",
-    'MAIL_USERNAME': "server",
-    'MAIL_FROM_ADDRESS': "noreply@server.test",
-    'MAIL_FROM_NAME': "Server",
+    'MAIL_USERNAME': "servers",
+    'MAIL_FROM_ADDRESS': "noreply@servers.test",
+    'MAIL_FROM_NAME': "Servers",
+    'POSTMARK_TOKEN': "token"
 }
 
 packages = {
@@ -25,7 +57,7 @@ packages = {
 }
 
 switchToBasePath = 'cd ../ && '
-switchToProjectPath = 'cd ../server/ && '
+switchToProjectPath = 'cd ../' + name + '/ && '
 
 
 def base_command(executionCommand):
@@ -44,9 +76,17 @@ def install_laravel():
     base_command('laravel new ' + name)
 
 
+def copy_resources():
+    for key, value in resources.items():
+        source = 'resources' + value['source'] + value['name']
+        target = projectPath + value['target'] + value['name']
+        files.copy_file(source, target)
+
+
 def set_variables():
     for key, value in environments.items():
-        files.update_key_value('../server/.env', key, value)
+        path = projectPath + '/.env'
+        files.update_key_value(path, key, value)
 
 
 def install_packages():
@@ -58,7 +98,7 @@ def install_packages():
 
 
 install_laravel()
-files.copy_file('resources/phpunit.xml', '../server/phpunit.xml')
+copy_resources()
 set_variables()
 install_packages()
 # remove_project()
