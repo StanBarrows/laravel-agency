@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "packages": [
+    {
+      "key": "laravel-breeze"
+    },
+       {
+      "key": "pest-php"
+    },
+    {
+      "key": "spatie-laravel-activitylog"
+    },
+    {
+      "key": "spatie-laravel-data"
+    },
+    {
+      "key": "sammyjo20-lasso"
+    },
+    {
+      "key": "spatie-ray"
+    }
+  ]
+}

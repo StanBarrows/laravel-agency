@@ -1,0 +1,129 @@
+{
+  "default": [
+    {
+      "key": "valet",
+      "order": null,
+      "commands": [
+        {
+          "command": "valet secure"
+        }
+      ]
+    }
+  ],
+  "composer": [
+    {
+      "key": "spatie-ray",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require spatie/laravel-ray\""
+        }
+      ]
+    },
+    {
+      "key": "laravel-breeze",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require laravel/breeze --dev"
+        },
+        {
+          "command": "php artisan breeze:install"
+        }
+      ]
+    },
+    {
+      "key": "spatie-laravel-activitylog",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require spatie/laravel-activitylog"
+        },
+        {
+          "command": "php artisan vendor:publish --provider=\"Spatie\\Activitylog\\ActivitylogServiceProvider\" --tag=\"activitylog-migrations\""
+        },
+        {
+          "command": "php artisan vendor:publish --provider=\"Spatie\\Activitylog\\ActivitylogServiceProvider\" --tag=\"activitylog-config\""
+        }
+      ]
+    },
+    {
+      "key": "spatie-laravel-data",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require spatie/laravel-data"
+        },
+        {
+          "command": "php artisan vendor:publish --provider=\"Spatie\\LaravelData\\LaravelDataServiceProvider\" --tag=\"data-config\""
+        }
+      ]
+    },
+    {
+      "key": "sammyjo20-lasso",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require sammyjo20/lasso"
+        },
+        {
+          "command": "php artisan vendor:publish --tag=lasso-config"
+        }
+      ]
+    },
+    {
+      "key": "pest-php",
+      "order": null,
+      "commands": [
+        {
+          "command": "composer require pestphp/pest --dev --with-all-dependencies --no-interaction"
+        },
+        {
+          "command": "composer require pestphp/pest-plugin-laravel --dev --no-interaction"
+        },
+        {
+          "command": "php artisan pest:install --no-interaction"
+        }
+      ]
+    }
+  ],
+  "npm": [
+    {
+      "key": "npm",
+      "order": null,
+      "commands": [
+        {
+          "command": "npm install && npm run dev"
+        }
+      ]
+    }
+  ],
+  "artisan": [
+    {
+      "key": "migration",
+      "order": null,
+      "commands": [
+         {
+          "command": "php artisan session:table"
+        },
+        {
+          "command": "php artisan migrate:fresh --seed --force"
+        }
+      ]
+    }
+  ],
+  "testing": [
+    {
+      "key": "pest",
+      "order": null,
+      "commands": [
+         {
+          "command": "php artisan cache:clear && php artisan config:clear"
+        },
+        {
+          "command": "php artisan test"
+        }
+      ]
+    }
+  ]
+}
