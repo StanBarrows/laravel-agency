@@ -1,7 +1,7 @@
 import os
 import files
 
-name = 'servers'
+name = 'dns-vault'
 projectPath = '../' + name
 
 resources = {
